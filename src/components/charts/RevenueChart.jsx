@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   AreaChart,
   Area,
@@ -6,9 +8,20 @@ import {
   XAxis,
 } from "recharts";
 
-import { revenueData } from "../../data/revenueData";
+import { chartDatasets } from "../../data/chartDatasets";
 
 export default function RevenueChart() {
+  const [filter, setFilter] = useState("week");
+
+  const data = chartDatasets[filter];
+
+  const filters = [
+    "today",
+    "week",
+    "month",
+    "year",
+  ];
+
   return (
     <div
       className="
@@ -20,15 +33,39 @@ export default function RevenueChart() {
       p-6
       "
     >
-      <h2 className="text-xl font-semibold mb-6">
-        Revenue Overview
-      </h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-semibold">
+          Revenue Overview
+        </h2>
 
-      <ResponsiveContainer width="100%" height={320}>
-        <AreaChart data={revenueData}>
+        <div className="flex gap-2">
+          {filters.map((item) => (
+            <button
+              key={item}
+              onClick={() => setFilter(item)}
+              className={`
+                px-4 py-2 rounded-xl capitalize transition
+                ${
+                  filter === item
+                    ? "bg-violet-600"
+                    : "bg-white/5 hover:bg-white/10"
+                }
+              `}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <ResponsiveContainer
+        width="100%"
+        height={320}
+      >
+        <AreaChart data={data}>
           <defs>
             <linearGradient
-              id="revenueGradient"
+              id="gradient"
               x1="0"
               y1="0"
               x2="0"
@@ -39,7 +76,6 @@ export default function RevenueChart() {
                 stopColor="#8b5cf6"
                 stopOpacity={0.8}
               />
-
               <stop
                 offset="95%"
                 stopColor="#8b5cf6"
@@ -49,7 +85,7 @@ export default function RevenueChart() {
           </defs>
 
           <XAxis
-            dataKey="month"
+            dataKey="label"
             stroke="#888"
           />
 
@@ -59,8 +95,8 @@ export default function RevenueChart() {
             type="monotone"
             dataKey="revenue"
             stroke="#8b5cf6"
-            fill="url(#revenueGradient)"
             strokeWidth={3}
+            fill="url(#gradient)"
           />
         </AreaChart>
       </ResponsiveContainer>
