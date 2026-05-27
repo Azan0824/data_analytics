@@ -1,10 +1,30 @@
 export const revenueData = [
-  { month: "Jan", revenue: 12000 },
-  { month: "Feb", revenue: 18000 },
-  { month: "Mar", revenue: 24000 },
-  { month: "Apr", revenue: 21000 },
-  { month: "May", revenue: 32000 },
-  { month: "Jun", revenue: 28000 },
-  { month: "Jul", revenue: 39000 },
-  { month: "Aug", revenue: 47000 },
+  {
+    name: "Mon",
+    revenue: 4200,
+  },
+  {
+    name: "Tue",
+    revenue: 5200,
+  },
+  {
+    name: "Wed",
+    revenue: 6100,
+  },
+  {
+    name: "Thu",
+    revenue: 5800,
+  },
+  {
+    name: "Fri",
+    revenue: 7600,
+  },
+  {
+    name: "Sat",
+    revenue: 8200,
+  },
+  {
+    name: "Sun",
+    revenue: 9100,
+  },
 ];

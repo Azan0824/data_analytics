@@ -11,27 +11,27 @@ export default function Dashboard() {
   const metrics = useLiveMetrics();
 
   const liveKpis = [
-    {
-      title: "Revenue",
-      value: `$${metrics.revenue.toLocaleString()}`,
-      growth: "+12.5%",
-    },
-    {
-      title: "Users",
-      value: metrics.users.toLocaleString(),
-      growth: "+8.2%",
-    },
-    {
-      title: "Conversion Rate",
-      value: `${metrics.conversion}%`,
-      growth: "+2.1%",
-    },
-    {
-      title: "Bounce Rate",
-      value: `${metrics.bounce}%`,
-      growth: "-3.7%",
-    },
-  ];
+  {
+    title: "Revenue",
+    value: `$${metrics.revenue.toLocaleString()}`,
+    growth: "+12.5%",
+  },
+  {
+    title: "Users",
+    value: metrics.users.toLocaleString(),
+    growth: "+8.2%",
+  },
+  {
+    title: "Conversion Rate",
+    value: `${metrics.conversion}%`,
+    growth: "+2.1%",
+  },
+  {
+    title: "Bounce Rate",
+    value: `${metrics.bounce}%`,
+    growth: "-3.7%",
+  },
+];
  return (
   <DashboardLayout>
     <div className="space-y-6">
@@ -50,7 +50,7 @@ export default function Dashboard() {
         <ThemeToggle />
       </div>
 
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
         {liveKpis.map((item) => (
           <KPI
             key={item.title}
@@ -61,7 +61,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid xl:grid-cols-3 gap-6">
         <RevenueChart />
         <TrafficDonut />
       </div>
