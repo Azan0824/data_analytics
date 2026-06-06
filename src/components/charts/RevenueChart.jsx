@@ -5,13 +5,13 @@ import {
   XAxis,
   Tooltip,
 } from "recharts";
-import useRealtimeRevenue from "../../hooks/useRealtimeRevenue";
-import { motion } from "framer-motion";
 
+import { motion } from "framer-motion";
+import useRevenueData from "../../hooks/useRevenueData";
 
 
 export default function RevenueChart() {
-  const data = useRealtimeRevenue();
+  const data = useRevenueData();
   return (
     <motion.div
       whileHover={{ scale: 1.01 }}
@@ -65,9 +65,9 @@ export default function RevenueChart() {
             </defs>
 
             <XAxis
-              dataKey="name"
-              stroke="#71717a"
-            />
+  dataKey="month"
+  stroke="#71717a"
+/>
 
             <Tooltip />
 

@@ -3,9 +3,12 @@ import KPI from "../components/cards/KPI";
 import RevenueChart from "../components/charts/RevenueChart";
 import TrafficDonut from "../components/charts/TrafficDonut";
 import TransactionsTable from "../components/table/TransactionsTable";
+
+import RevenueCard from "../components/cards/RevenueCard";
+import TrafficCard from "../components/cards/TrafficCard";
+
 import useLiveMetrics from "../hooks/useLiveMetrics";
 import ThemeToggle from "../components/ui/ThemeToggle";
-
 
 export default function Dashboard() {
   const metrics = useLiveMetrics();
@@ -50,7 +53,7 @@ export default function Dashboard() {
         <ThemeToggle />
       </div>
 
-      <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-4 gap-6">
         {liveKpis.map((item) => (
           <KPI
             key={item.title}
@@ -61,9 +64,14 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div className="grid xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-6">
         <RevenueChart />
         <TrafficDonut />
+      </div>
+
+      <div className="grid grid-cols-2 gap-6">
+        <RevenueCard />
+        <TrafficCard />
       </div>
 
       <TransactionsTable />

@@ -1,17 +1,27 @@
-import Sparkline from "../charts/Sparkline";
-
-const revenueSpark = [
-  { value: 20 },
-  { value: 30 },
-  { value: 25 },
-  { value: 45 },
-  { value: 50 },
-  { value: 70 },
-];
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function RevenueCard() {
+  const [growth, setGrowth] = useState(78);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGrowth((prev) => {
+        const next = prev + (Math.random() * 4 - 2);
+
+        if (next > 100) return 100;
+        if (next < 40) return 40;
+
+        return Number(next.toFixed(1));
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div
+    <motion.div
+      whileHover={{ scale: 1.02 }}
       className="
       bg-white/5
       border border-white/10
@@ -20,21 +30,31 @@ export default function RevenueCard() {
       backdrop-blur-xl
       "
     >
-      <p className="text-zinc-400">
-        Monthly Revenue
-      </p>
+      <h3 className="text-lg font-semibold mb-4">
+        Revenue Growth
+      </h3>
 
-      <h2 className="text-4xl font-bold mt-2">
-        $48,920
-      </h2>
-
-      <p className="text-green-400 mt-1">
-        +12.5%
-      </p>
-
-      <div className="mt-4">
-        <Sparkline data={revenueSpark} />
+      <div className="w-full bg-zinc-800 rounded-full h-4 overflow-hidden">
+        <motion.div
+          animate={{
+            width: `${growth}%`,
+          }}
+          transition={{
+            duration: 1,
+          }}
+          className="
+          h-4
+          rounded-full
+          bg-gradient-to-r
+          from-violet-500
+          to-fuchsia-500
+          "
+        />
       </div>
-    </div>
+
+      <p className="mt-4 text-zinc-400">
+        Growth this month: {growth}%
+      </p>
+    </motion.div>
   );
 }

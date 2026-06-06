@@ -59,7 +59,11 @@ export default function Sidebar() {
           const Icon = item.icon;
 
           return (
-            <NavLink key={item.name} to={item.path}>
+            <NavLink
+  key={item.name}
+  to={item.path}
+  end={item.path === "/"}
+>
               {({ isActive }) => (
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}

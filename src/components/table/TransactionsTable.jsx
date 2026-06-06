@@ -1,57 +1,53 @@
 import { useState } from "react";
+import useTransactions from "../../hooks/useTransactions";
 
-
-import useUsers from "../../hooks/useUsers";
 export default function TransactionsTable() {
   const [search, setSearch] = useState("");
 
-const {
-  users,
-  loading,
-  error,
-} = useUsers();
-  const [sortField, setSortField] = useState("customer");
-  const [sortOrder, setSortOrder] = useState("asc");
+  const {
+    transactions,
+    loading,
+    error,
+  } = useTransactions();
 
-  const handleSort = (field) => {
-    if (sortField === field) {
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-    } else {
-      setSortField(field);
-      setSortOrder("asc");
-    }
-  };
-
-  const filteredUsers = users
-  .filter((user) =>
-    `${user.firstName} ${user.lastName}`
+  const filteredTransactions = transactions.filter((transaction) =>
+    transaction.customer
       .toLowerCase()
       .includes(search.toLowerCase())
-  )
-  .sort((a, b) => {
-    const nameA = `${a.firstName} ${a.lastName}`;
-    const nameB = `${b.firstName} ${b.lastName}`;
-
-    if (sortOrder === "asc") {
-      return nameA.localeCompare(nameB);
-    }
-
-    return nameB.localeCompare(nameA);
-  });
-    if (loading) {
-  return (
-    <div className="text-center py-20">
-      Loading users...
-    </div>
   );
-}
-if (error) {
-  return (
-    <div className="text-red-500 py-20">
-      {error}
-    </div>
-  );
-}
+
+  if (loading) {
+    return (
+      <div
+        className="
+        bg-white/5
+        border border-white/10
+        backdrop-blur-xl
+        rounded-3xl
+        p-6
+        text-center
+        "
+      >
+        Loading transactions...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div
+        className="
+        bg-white/5
+        border border-red-500/20
+        rounded-3xl
+        p-6
+        text-red-400
+        "
+      >
+        {error}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -87,81 +83,64 @@ if (error) {
       <table className="w-full">
         <thead>
           <tr className="border-b border-white/10 text-zinc-400">
-
-            <th
-              className="py-4 text-left cursor-pointer"
-              onClick={() => handleSort("customer")}
-            >
+            <th className="py-4 text-left">
               Customer
             </th>
 
-            <th
-              className="py-4 text-left cursor-pointer"
-              onClick={() => handleSort("plan")}
-            >
+            <th className="py-4 text-left">
               Plan
             </th>
 
-            <th
-              className="py-4 text-left cursor-pointer"
-              onClick={() => handleSort("amount")}
-            >
+            <th className="py-4 text-left">
               Amount
             </th>
 
-            <th
-              className="py-4 text-left cursor-pointer"
-              onClick={() => handleSort("status")}
-            >
+            <th className="py-4 text-left">
               Status
             </th>
-
           </tr>
         </thead>
 
         <tbody>
-  {filteredUsers.map((user) => (
-    <tr
-      key={user.id}
-      className="
-      border-b border-white/5
-      hover:bg-white/5
-      transition
-      "
-    >
-      <td className="py-4">
-        {user.firstName} {user.lastName}
-      </td>
+          {filteredTransactions.map((row) => (
+            <tr
+              key={row.id}
+              className="
+                border-b
+                border-white/10
+                hover:bg-white/5
+                transition
+              "
+            >
+              <td className="py-4">
+                {row.customer}
+              </td>
 
-      <td className="py-4">
-        Premium
-      </td>
+              <td>
+                {row.plan}
+              </td>
 
-      <td className="py-4">
-        $
-        {(
-          Math.random() * 500 +
-          50
-        ).toFixed(0)}
-      </td>
+              <td>
+                ${row.amount}
+              </td>
 
-      <td className="py-4">
-        <span
-          className="
-          bg-violet-500/20
-          text-violet-300
-          px-3
-          py-1
-          rounded-full
-          text-sm
-          "
-        >
-          Active
-        </span>
-      </td>
-    </tr>
-  ))}
-</tbody>
+              <td>
+                <span
+                  className="
+                  px-3
+                  py-1
+                  rounded-full
+                  bg-violet-500/20
+                  text-violet-300
+                  text-sm
+                  "
+                >
+                  {row.status}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

@@ -6,6 +6,10 @@ export default function KPI({
   value,
   growth,
 }) {
+  const numericValue = parseFloat(
+    String(value).replace(/[^0-9.]/g, "")
+  );
+
   return (
     <motion.div
       whileHover={{
@@ -27,14 +31,9 @@ export default function KPI({
           {title}
         </p>
 
-        <h2 className="text-4xl font-bold">
-          {typeof value === "number" ? (
-            <CountUp end={value} duration={2} />
-          ) : (
-            value
-          )}
-        </h2>
-
+        <h2 className="text-3xl font-bold">
+  {value}
+</h2>
         <span
           className={
             growth.startsWith("+")
